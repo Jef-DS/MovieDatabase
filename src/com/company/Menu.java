@@ -8,8 +8,8 @@ public class Menu {
     private Scanner scanner = new Scanner(System.in);
     private ArrayList<Movie> movieDatabase = new ArrayList<>();
     private int keuzeMenu;
-    private int selectieFilm;
     private int selectieBewerking;
+    private String prompt;
 
     public Menu() {
         laadDatabank();
@@ -27,8 +27,14 @@ public class Menu {
                 "\t6-- Exit\n" +
                 "Uw keuze: ");
 
-        keuzeMenu = Integer.parseInt(scanner.nextLine());
-        uitvoeringMenu();
+        // Controleer input op getal
+        try {
+            keuzeMenu = Integer.parseInt(scanner.nextLine());
+            uitvoeringMenu();
+        } catch (NumberFormatException ex) {
+            System.out.println("Onjuiste invoer, probeer opnieuw.");
+            toonMenu();
+        }
     }
 
     public void uitvoeringMenu() {
@@ -43,18 +49,20 @@ public class Menu {
                 toonMenu();
                 break;
             case 3:
-                selecteerFilm();
+                int keuzeBewerk = selecteerFilm();
                 selecteerBewerking();
+                uitvoeringBewerking(keuzeBewerk);
                 bewaarDatabank();
                 toonMenu();
                 break;
             case 4:
-                //verwijderFilm();
-                //bewaarDatabank();
+                int keuzeVerwijder = selecteerFilm();
+                verwijderFilm(keuzeVerwijder);
+                bewaarDatabank();
                 toonMenu();
                 break;
             case 5:
-                //createHTML();
+                createHTML();
                 toonMenu();
                 break;
             case 6:
@@ -75,22 +83,47 @@ public class Menu {
         movie.setTitle(scanner.nextLine());
         System.out.print("Regisseur: ");
         movie.setDirector(scanner.nextLine());
-        System.out.print("Jaar: ");
-        movie.setYear(Integer.parseInt(scanner.nextLine()));
+        // Controleer input op getal
+        prompt = "Jaar: ";
+        int jaar = checkGetal(prompt);
+        movie.setYear(jaar);
         System.out.print("Genre: ");
         movie.setGenre(scanner.nextLine());
-        System.out.print("Rating (op 5): ");
-        movie.setYear(Integer.parseInt(scanner.nextLine()));
+        // Controleer input op getal
+        prompt = "Rating (op 5): ";
+        int rating = checkGetal(prompt);
+        movie.setRating(rating);
 
         //voeg film toe aan databank
         movieDatabase.add(movie);
         System.out.printf("%s is toegevoegd aan de databank.", movie.getTitle());
     }
 
+    private void verwijderFilm(int selectieFilm) {
+        System.out.println();
+        String title = movieDatabase.get(selectieFilm).getTitle();
+        System.out.printf("Weet uw zeker dat uw \"%s\" wilt verwijderen (Ja/Nee)? ", title);
+        String antwoord = scanner.nextLine();
+        while (!antwoord.equalsIgnoreCase("ja") && !antwoord.equalsIgnoreCase("nee")) {
+            System.out.print("Onjuiste invoer, probeer opnieuw: ");
+            antwoord = scanner.nextLine();
+        }
+        if (antwoord.equalsIgnoreCase("ja")) {
+            movieDatabase.remove(selectieFilm);
+            System.out.printf("%s is verwijderd.", title);
+        } else return;
+    }
+
     private int selecteerFilm() {
         toonDatabank();
-        System.out.print("Welke film wilt u bewerken: ");
-        selectieFilm = Integer.parseInt(scanner.nextLine())-1;
+        System.out.println();
+        // Controleer input op getal
+        prompt = "Selecteer een film (nr): ";
+        int selectieFilm = checkGetal(prompt) - 1;
+        while (selectieFilm < 0 && selectieFilm >= movieDatabase.size()) {
+            System.out.println("Onjuiste invoer, probeer opnieuw.");
+            selectieFilm = checkGetal(prompt) - 1;
+        }
         return selectieFilm;
     }
 
@@ -102,14 +135,13 @@ public class Menu {
                 "\t3-- Jaar\n" +
                 "\t4-- Genre\n" +
                 "\t5-- Rating\n" +
-                "\t6-- Exit\n" +
+                "\t6-- Annuleer\n" +
                 "Uw keuze: ");
 
         selectieBewerking = Integer.parseInt(scanner.nextLine());
-        uitvoeringBewerking();
     }
 
-    private void uitvoeringBewerking() {
+    private void uitvoeringBewerking(int selectieFilm) {
         switch (selectieBewerking) {
             case 1:
                 System.out.print("Titel: ");
@@ -120,16 +152,20 @@ public class Menu {
                 movieDatabase.get(selectieFilm).setDirector(scanner.nextLine());
                 break;
             case 3:
-                System.out.print("Jaar: ");
-                movieDatabase.get(selectieFilm).setYear(Integer.parseInt(scanner.nextLine()));
+                // Controleer input op getal
+                prompt = "Jaar: ";
+                int jaar = checkGetal(prompt);
+                movieDatabase.get(selectieFilm).setYear(jaar);
                 break;
             case 4:
                 System.out.print("Genre: ");
                 movieDatabase.get(selectieFilm).setGenre(scanner.nextLine());
                 break;
             case 5:
-                System.out.print("Rating (op 5): ");
-                movieDatabase.get(selectieFilm).setRating(Integer.parseInt(scanner.nextLine()));
+                // Controleer input op getal
+                prompt = "Rating (op 5): ";
+                int rating = checkGetal(prompt);
+                movieDatabase.get(selectieFilm).setRating(rating);
                 break;
             case 6:
                 return;
@@ -138,6 +174,49 @@ public class Menu {
         }
     }
 
+    private void createHTML() {
+        try (PrintWriter writer = new PrintWriter(new BufferedWriter(new FileWriter("moviedatabase.html")))) {
+            // Schrijf HTML naar bestand
+            String html = "<!doctype html>\n" +
+                    "<html lang=\"en\">\n" +
+                    "\n" +
+                    "<head>\n" +
+                    "  <meta charset=\"utf-8\">\n" +
+                    "  <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n" +
+                    "  <title>Movie database</title>\n" +
+                    "  <script type=\"text/javascript\">\n" +
+                    "    function load() {\n" +
+                    "      window.location.href = \"https://www.imdb.com\";\n" +
+                    "    }\n" +
+                    "  </script>\n" +
+                    "</head>\n" +
+                    "\n" +
+                    "<body onload=\"load()\">\n" +
+                    "</body>\n" +
+                    "\n" +
+                    "</html>";
+            writer.println(html);
+        } catch (IOException ex) {
+            System.out.println(ex.getMessage());
+        }
+    }
+
+    // Methode checkt of input een getal is
+    private int checkGetal(String prompt) {
+        boolean check;
+        check = false;
+        int getal = 0;
+        do {
+            System.out.print(prompt);
+            try {
+                getal = Integer.parseInt(scanner.nextLine());
+                check = true;
+            } catch (NumberFormatException ex) {
+                System.out.println("Onjuiste invoer, probeer opnieuw.");
+            }
+        } while (!check);
+        return getal;
+    }
 
     private void toonDatabank() {
         System.out.println();

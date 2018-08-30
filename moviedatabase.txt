@@ -1,2 +1,2 @@
-z;b;1993;c;4
-q;e;1;f;0
+The Shawshank Redemption;Frank Darabont;1994;drama;5
+Inception;Christopher Nolan;2010;actie;4
