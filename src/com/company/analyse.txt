@@ -1,4 +1,4 @@
-1. Toon menu        schatting: 50'
+1. Toon menu            schatting: 50'  uitvoering: 30'
 ------------
     --Opties menu:
         1. Voeg film toe
@@ -14,3 +14,37 @@
         3. vraag nr.
         4. bewaar nr.
         5. met switch gekozen methode uitvoeren
+
+
+2. Bewaar filmlijst     schatting: 1h  uitvoering: 40'
+-------------------
+    --Uitvoering:
+        1. Lees Arraylist
+        2. Maak file aan of overschrijf
+        3. Schrijf String in file
+        4. Sluit file
+
+3. Laad filmlijst     schatting: 40'  uitvoering: 30'
+-------------------
+    --Uitvoering:
+        1. Check of er bestand bestaat
+        2. Lees bestand, creëer String per lijn
+        3. Schrijf String/film in Arraylist (opgedeeld)
+        4. Sluit file
+
+4. Toon filmlijst     schatting: 15'  uitvoering: 10'
+-------------------
+    --Uitvoering:
+        1. Lees bestand => wordt uitgevoerd bij opstart
+        2. Voor elke film in databank, print film
+
+5. Bewerk film     schatting: 40'  uitvoering: 35'
+-------------------
+    --Uitvoering:
+        1. Toon databank
+        2. Vraag nr van de film
+        3. Toon opties om te wijzigen (titel, jaar, ...)
+        4. Vraag nr optie
+        5. Wijzig en set
+
+
