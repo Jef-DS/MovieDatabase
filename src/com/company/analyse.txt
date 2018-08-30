@@ -1,0 +1,16 @@
+1. Toon menu        schatting: 50'
+------------
+    --Opties menu:
+        1. Voeg film toe
+        2. Toon filmlijst
+        3. Wijzig film
+        4. Verwijder film
+        5. Creëer HTML
+        6. Exit
+
+    --Uitvoering:
+        1. Klasse menu
+        2. print menu
+        3. vraag nr.
+        4. bewaar nr.
+        5. met switch gekozen methode uitvoeren
