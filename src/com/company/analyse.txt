@@ -47,4 +47,20 @@
         4. Vraag nr optie
         5. Wijzig en set
 
+6. Verwijder film     schatting: 30'  uitvoering: 26' 57''
+-------------------
+    --Uitvoering:
+        1. Toon databank
+        2. Vraag nr van de film
+        3. Verwijder film uit databank
 
+7. Opvangen exceptions      schatting: 30'  uitvoering: 1h 30'
+----------------------
+
+8. Creëer HTML     schatting: 1h  uitvoering: 12'
+--------------
+    --Uitvoering:
+        1. Maak Stringbuilder
+        2. Vraag films in databank op
+        3. Voeg per film een String toe
+        4. Print resultaat in een HTML-bestand
