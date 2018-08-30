@@ -1,2 +1,6 @@
 The Shawshank Redemption;Frank Darabont;1994;drama;5
+
 Inception;Christopher Nolan;2010;actie;4
+
+Se7en;David Fincher;1995;thriller;4
+
